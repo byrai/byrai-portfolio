@@ -58,7 +58,7 @@ export default function Hero() {
         {/* ════════ LEFT — photo ════════ */}
         <div className="relative min-h-[55vw] md:min-h-full h-full overflow-hidden h-fadein h-d1">
           <Image
-            src="/images/NKN_0852.JPG"
+            src="/images/hero-bg.png"
             alt="Rai M. Reyes Jr. — DevAdora"
             fill
             priority
