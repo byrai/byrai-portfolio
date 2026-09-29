@@ -7,20 +7,7 @@ import Footer from "@/components/Footer";
 import FloatingControls from "@/components/FloatingControls";
 import { useState, useEffect } from "react";
 
-const MONTHS = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "May",
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dec",
-];
+const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
 function parseMonthYear(str: string): Date {
   if (str === "Present") return new Date();
@@ -31,15 +18,11 @@ function parseMonthYear(str: string): Date {
 function calcDuration(start: string, end = "Present"): string {
   const s = parseMonthYear(start);
   const e = parseMonthYear(end);
-  let total =
-    (e.getFullYear() - s.getFullYear()) * 12 + (e.getMonth() - s.getMonth());
+  let total = (e.getFullYear() - s.getFullYear()) * 12 + (e.getMonth() - s.getMonth());
   if (total < 1) total = 1;
   const yrs = Math.floor(total / 12);
   const mos = total % 12;
-  return [
-    yrs ? `${yrs} yr${yrs > 1 ? "s" : ""}` : "",
-    mos ? `${mos} mo${mos > 1 ? "s" : ""}` : "",
-  ]
+  return [yrs ? `${yrs} yr${yrs > 1 ? "s" : ""}` : "", mos ? `${mos} mo${mos > 1 ? "s" : ""}` : ""]
     .filter(Boolean)
     .join(" ");
 }
@@ -56,13 +39,10 @@ function groupDuration(roles: Role[]): string {
 
   const startStr = `${MONTHS[minStart.getMonth()]} ${minStart.getFullYear()}`;
   const isActive = roles.some((r) => !r.end || r.end === "Present");
-  const endStr = isActive
-    ? "Present"
-    : `${MONTHS[maxEnd.getMonth()]} ${maxEnd.getFullYear()}`;
+  const endStr = isActive ? "Present" : `${MONTHS[maxEnd.getMonth()]} ${maxEnd.getFullYear()}`;
 
   return calcDuration(startStr, endStr);
 }
-
 
 interface Role {
   position: string;
@@ -117,37 +97,17 @@ function Modal({
   }, [isOpen]);
   if (!isOpen) return null;
   return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4"
-      role="dialog"
-      aria-modal="true"
-    >
-      <div
-        className="absolute inset-0 bg-black/80 backdrop-blur-sm"
-        onClick={onClose}
-      />
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4" role="dialog" aria-modal="true">
+      <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={onClose} />
       <div className="about-modal relative z-10 w-full max-w-4xl max-h-[85vh] bg-[#000000] border border-[#f0ede4]/10 rounded-2xl flex flex-col shadow-2xl">
         <div className="about-modal-header flex items-center justify-between px-6 py-5 border-b border-[#f0ede4]/10 shrink-0">
-          <h2 className="about-modal-title text-sm font-semibold tracking-[0.2em] uppercase text-[#f0ede4]">
-            {title}
-          </h2>
+          <h2 className="about-modal-title text-sm font-semibold tracking-[0.2em] uppercase text-[#f0ede4]">{title}</h2>
           <button
             onClick={onClose}
             className="about-modal-close text-[#f0ede4]/50 hover:text-[#f0ede4] transition-colors p-1"
           >
-            <svg
-              width="20"
-              height="20"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M6 18L18 6M6 6l12 12"
-              />
+            <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
         </div>
@@ -180,28 +140,15 @@ function ExperienceGroupCard({ group }: { group: ExperienceGroup }) {
 
       <div className="flex-1 min-w-0">
         <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
-          <h3 className="about-card-title text-[0.95rem] font-semibold leading-snug">
-            {group.company}
-          </h3>
-          <span className="about-card-muted text-[11px] opacity-50">
-            · {group.type}
-          </span>
-          <span className="about-card-muted text-[11px] opacity-40">
-            · {duration}
-          </span>
+          <h3 className="about-card-title text-[0.95rem] font-semibold leading-snug">{group.company}</h3>
+          <span className="about-card-muted text-[11px] opacity-50">· {group.type}</span>
+          <span className="about-card-muted text-[11px] opacity-40">· {duration}</span>
         </div>
-        <p className="about-card-sub text-[11px] opacity-45 mt-0.5">
-          {group.location}
-        </p>
+        <p className="about-card-sub text-[11px] opacity-45 mt-0.5">{group.location}</p>
 
-        <div
-          className={`mt-3 ${!isSingle ? "border-l border-[var(--border-subtle)] pl-4" : ""}`}
-        >
+        <div className={`mt-3 ${!isSingle ? "border-l border-[var(--border-subtle)] pl-4" : ""}`}>
           {group.roles.map((role, i) => (
-            <div
-              key={i}
-              className={`relative ${!isSingle && i < group.roles.length - 1 ? "mb-5" : ""}`}
-            >
+            <div key={i} className={`relative ${!isSingle && i < group.roles.length - 1 ? "mb-5" : ""}`}>
               {!isSingle && (
                 <div
                   className="absolute -left-[21px] top-[5px] w-2 h-2 rounded-full border"
@@ -212,9 +159,7 @@ function ExperienceGroupCard({ group }: { group: ExperienceGroup }) {
                 />
               )}
               <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-0.5">
-                <p className="about-card-title text-[0.88rem] font-semibold">
-                  {role.position}
-                </p>
+                <p className="about-card-title text-[0.88rem] font-semibold">{role.position}</p>
                 <span className="about-card-muted text-[11px] opacity-40 shrink-0 whitespace-nowrap">
                   {formatTimeframe(role.start, role.end)}
                 </span>
@@ -248,35 +193,17 @@ function ExperienceGroupCard({ group }: { group: ExperienceGroup }) {
   );
 }
 
-function InfoCard({
-  top,
-  sub,
-  meta,
-  body,
-}: {
-  top: string;
-  sub: string;
-  meta: string;
-  body?: string;
-}) {
+function InfoCard({ top, sub, meta, body }: { top: string; sub: string; meta: string; body?: string }) {
   return (
     <div className="about-card flex flex-col gap-1 p-4 border border-[#f0ede4]/10 rounded-xl hover:border-[#f0ede4]/25 transition-colors">
       <div className="flex items-start justify-between gap-2">
-        <h3 className="about-card-title text-sm font-semibold leading-snug">
-          {top}
-        </h3>
+        <h3 className="about-card-title text-sm font-semibold leading-snug">{top}</h3>
         <span className="about-card-muted text-[10px] opacity-40 tracking-widest shrink-0 mt-0.5 uppercase">
           {meta}
         </span>
       </div>
-      <span className="about-card-sub text-[11px] font-medium opacity-50 tracking-wide uppercase">
-        {sub}
-      </span>
-      {body && (
-        <p className="about-card-body text-xs opacity-55 leading-relaxed mt-1">
-          {body}
-        </p>
-      )}
+      <span className="about-card-sub text-[11px] font-medium opacity-50 tracking-wide uppercase">{sub}</span>
+      {body && <p className="about-card-body text-xs opacity-55 leading-relaxed mt-1">{body}</p>}
     </div>
   );
 }
@@ -293,6 +220,32 @@ export default function AboutPage() {
 
   const experienceGroups: ExperienceGroup[] = [
     {
+      company: "BetterKabankalan",
+      type: "Full-time",
+      location: "Remote",
+      roles: [
+        {
+          position: "Maintainer, Founder",
+          start: "Dec 2025",
+          description: "Developed and maintained the BetterKabankalan platform. A civic-tech platform for the City of Kabankalan, Philippines.",
+          skills: [],
+        },
+      ],
+    },
+    {
+      company: "Web Design Davao / Scalyn OPC",
+      type: "Full-time",
+      location: "Remote",
+      roles: [
+        {
+          position: "Backend Developer",
+          start: "Aug 2026",
+          description: "",
+          skills: [],
+        },
+      ],
+    },
+    {
       company: "KCAT Inc.",
       type: "Full-time",
       location: "Kabankalan, Western Visayas, Philippines · On-site",
@@ -300,15 +253,10 @@ export default function AboutPage() {
         {
           position: "Software Developer",
           start: "Oct 2025",
+          end: "Jul 2026",
           description:
             "Software developer and IT generalist across application development, infrastructure, and network operations. Built all the internal web app and system for operational management.",
-          skills: [
-            "Network Administration",
-            "Proxmox",
-            "Grafana",
-            "Laravel",
-            "IT Support",
-          ],
+          skills: ["Network Administration", "Proxmox", "Grafana", "Laravel", "IT Support"],
         },
       ],
     },
@@ -446,8 +394,7 @@ export default function AboutPage() {
       title: "FBC Interschool Web Design",
       year: "2025",
       place: "Champion",
-      description:
-        "Won championship in the FBC Interschool Web Design Competition.",
+      description: "Won championship in the FBC Interschool Web Design Competition.",
     },
     {
       title: "SECSA Week Web Design",
@@ -465,15 +412,13 @@ export default function AboutPage() {
       title: "SC IT Day Web Design",
       year: "2024",
       place: "Champion",
-      description:
-        "Won championship in the SC IT Day 2024 Web Design Competition.",
+      description: "Won championship in the SC IT Day 2024 Web Design Competition.",
     },
     {
       title: "WVSU Interschool Web Design",
       year: "2023",
       place: "Champion",
-      description:
-        "Won championship in the WVSU Interschool Web Design Competition.",
+      description: "Won championship in the WVSU Interschool Web Design Competition.",
     },
     {
       title: "PITCHUP: Social Solution Challenge",
@@ -485,19 +430,14 @@ export default function AboutPage() {
       title: "Exemplary Awards — Tech Innovation",
       year: "2025",
       place: "Southland College",
-      description:
-        "Won Exemplary Awards for Technology Innovation at commencement.",
+      description: "Won Exemplary Awards for Technology Innovation at commencement.",
     },
   ];
 
-  const achievements = [...achievementsRaw].sort(
-    (a, b) => parseYear(b.year) - parseYear(a.year),
-  );
+  const achievements = [...achievementsRaw].sort((a, b) => parseYear(b.year) - parseYear(a.year));
   const EXP_PREVIEW = 2;
   const ACH_PREVIEW = 4;
-  const visibleGroups = showAllExp
-    ? experienceGroups
-    : experienceGroups.slice(0, EXP_PREVIEW);
+  const visibleGroups = showAllExp ? experienceGroups : experienceGroups.slice(0, EXP_PREVIEW);
   const hiddenGroupsCount = experienceGroups.length - EXP_PREVIEW;
   const achievementsPreview = achievements.slice(0, ACH_PREVIEW);
   const remainingAch = achievements.length - ACH_PREVIEW;
@@ -524,15 +464,10 @@ export default function AboutPage() {
               <h1>DevAdora (Rai M. Reyes Jr.)</h1>
             </div>
             <div className="about-bio text-[1rem] sm:text-[1.1rem] md:text-[1.2rem] leading-5 sm:leading-7 text-center md:text-left mt-4">
-              <h1>
-                Aspiring Software Developer 👩🏻‍💻 and currently a freelancer based
-                in Philippines 📍.
-              </h1>
+              <h1>Aspiring Software Developer 👩🏻‍💻 and currently a freelancer based in Philippines 📍.</h1>
             </div>
             <div className="mt-8 flex flex-col justify-center items-center md:justify-start md:items-start">
-              <p className="about-label text-md font-semibold mb-2">
-                RESUME & CV
-              </p>
+              <p className="about-label text-md font-semibold mb-2">RESUME & CV</p>
               <div className="flex gap-4">
                 <a
                   href="/Rai M. Reyes Jr. - Resume.pdf"
@@ -556,27 +491,23 @@ export default function AboutPage() {
           <div className="md:w-2/3 flex flex-col gap-2">
             <div className="md:p-8">
               <span className="about-intro text-[1.2rem] sm:text-[1.2rem] md:text-[1.5rem] lg:text-[1.6rem] leading-8">
-                Ar-ar Reyes, the mind behind DevAdora, is a multifaceted
-                freelancer, developer, and designer devoted to transforming bold
-                ideas into impactful digital realities.
+                Ar-ar Reyes, the mind behind DevAdora, is a multifaceted freelancer, developer, and designer devoted to
+                transforming bold ideas into impactful digital realities.
               </span>
             </div>
 
             <div className="py-4 md:p-8">
               <p className="about-label mb-4">(ABOUT ME)</p>
               <span className="about-body text-[1rem] md:text-[1.2rem] leading-6">
-                With a seamless end-to-end process and a sharp eye for detail,
-                Ar-ar bridges imagination and innovation — crafting solutions
-                that dont just function, but resonate.
+                With a seamless end-to-end process and a sharp eye for detail, Ar-ar bridges imagination and innovation
+                — crafting solutions that dont just function, but resonate.
               </span>
             </div>
 
             {/* Work Experience */}
             <div className="md:p-8">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="about-section-heading text-xl font-semibold">
-                  WORK EXPERIENCE
-                </h2>
+                <h2 className="about-section-heading text-xl font-semibold">WORK EXPERIENCE</h2>
                 <span className="about-card-muted text-xs tracking-widest uppercase opacity-40">
                   {experienceGroups.length} companies
                 </span>
@@ -591,11 +522,7 @@ export default function AboutPage() {
                   onClick={() => setShowAllExp((v) => !v)}
                   className="about-view-all mt-6 w-full py-3 rounded-xl border border-[#f0ede4]/15 text-[#f0ede4]/60 text-xs tracking-widest uppercase hover:border-[#f0ede4]/35 hover:text-[#f0ede4] transition-all duration-200 flex items-center justify-center gap-2"
                 >
-                  <span>
-                    {showAllExp
-                      ? "Show less"
-                      : `Show ${hiddenGroupsCount} more companies`}
-                  </span>
+                  <span>{showAllExp ? "Show less" : `Show ${hiddenGroupsCount} more companies`}</span>
                   <svg
                     width="12"
                     height="12"
@@ -605,11 +532,7 @@ export default function AboutPage() {
                     strokeWidth={2}
                     className={`transition-transform duration-300 ${showAllExp ? "rotate-180" : ""}`}
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M19 9l-7 7-7-7"
-                    />
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
                   </svg>
                 </button>
               )}
@@ -618,22 +541,14 @@ export default function AboutPage() {
             {/* Achievements */}
             <div className="md:p-8">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="about-section-heading text-xl font-semibold">
-                  ACHIEVEMENTS
-                </h2>
+                <h2 className="about-section-heading text-xl font-semibold">ACHIEVEMENTS</h2>
                 <span className="about-card-muted text-xs tracking-widest uppercase opacity-40">
                   {achievements.length} total
                 </span>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {achievementsPreview.map((item, i) => (
-                  <InfoCard
-                    key={i}
-                    top={item.title}
-                    sub={item.place}
-                    meta={item.year}
-                    body={item.description}
-                  />
+                  <InfoCard key={i} top={item.title} sub={item.place} meta={item.year} body={item.description} />
                 ))}
               </div>
               {remainingAch > 0 && (
@@ -642,19 +557,8 @@ export default function AboutPage() {
                   className="about-view-all w-full mt-4 py-3 rounded-xl border border-[#f0ede4]/15 text-[#f0ede4]/60 text-xs tracking-widest uppercase hover:border-[#f0ede4]/35 hover:text-[#f0ede4] transition-all duration-200 flex items-center justify-center gap-2"
                 >
                   <span>View {remainingAch} more</span>
-                  <svg
-                    width="12"
-                    height="12"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={2}
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M19 9l-7 7-7-7"
-                    />
+                  <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
                   </svg>
                 </button>
               )}
@@ -663,22 +567,12 @@ export default function AboutPage() {
             {/* Education (last) */}
             <div className="md:p-8">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="about-section-heading text-xl font-semibold">
-                  EDUCATION
-                </h2>
-                <span className="about-card-muted text-xs tracking-widest uppercase opacity-40">
-                  Southland College
-                </span>
+                <h2 className="about-section-heading text-xl font-semibold">EDUCATION</h2>
+                <span className="about-card-muted text-xs tracking-widest uppercase opacity-40">Southland College</span>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {education.map((item, i) => (
-                  <InfoCard
-                    key={i}
-                    top={item.level}
-                    sub={item.school}
-                    meta={item.years}
-                    body={item.description}
-                  />
+                  <InfoCard key={i} top={item.level} sub={item.school} meta={item.years} body={item.description} />
                 ))}
               </div>
             </div>
@@ -696,13 +590,7 @@ export default function AboutPage() {
       >
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {achievements.map((item, i) => (
-            <InfoCard
-              key={i}
-              top={item.title}
-              sub={item.place}
-              meta={item.year}
-              body={item.description}
-            />
+            <InfoCard key={i} top={item.title} sub={item.place} meta={item.year} body={item.description} />
           ))}
         </div>
       </Modal>
